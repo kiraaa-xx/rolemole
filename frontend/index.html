@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<link rel="manifest" href="/site.webmanifest"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Role Mole</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="/" class="logo"><span class="logo-role">Role</span><span class="logo-mole">Mole</span></a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-moon" id="theme-icon"></i></button>
+      <a href="/profile" class="nav-avatar" id="nav-avatar-link">
+        <div class="avatar-circle" id="nav-avatar">?</div>
+      </a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1>Step into another world</h1>
+    <p>Chat with AI characters crafted for immersive roleplay</p>
+  </div>
+
+  <div class="search-bar-wrap">
+    <div class="search-bar">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="search-input" placeholder="Search characters..." oninput="filterCharacters()"/>
+    </div>
+  </div>
+
+  <div class="genre-tags" id="genre-tags">
+    <span class="tag active" onclick="filterGenre('all', this)">All</span>
+    <span class="tag" onclick="filterGenre('Fantasy', this)">Fantasy</span>
+    <span class="tag" onclick="filterGenre('Sci-Fi', this)">Sci-Fi</span>
+    <span class="tag" onclick="filterGenre('Mystery', this)">Mystery</span>
+    <span class="tag" onclick="filterGenre('Romance', this)">Romance</span>
+    <span class="tag" onclick="filterGenre('Horror', this)">Horror</span>
+    <span class="tag" onclick="filterGenre('Adventure', this)">Adventure</span>
+  </div>
+
+  <div class="section-label">Characters</div>
+  <div class="characters-list" id="characters-list">
+    <div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Loading characters...</div>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>

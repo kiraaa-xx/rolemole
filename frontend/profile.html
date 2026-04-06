@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<link rel="manifest" href="/site.webmanifest"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile – Role Mole</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .profile-wrap { max-width: 520px; margin: 40px auto; padding: 0 24px 60px; }
+    .profile-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; display: flex; flex-direction: column; gap: 20px; }
+    .profile-pfp-section { display: flex; align-items: center; gap: 18px; }
+    .profile-pfp-circle { width: 80px; height: 80px; border-radius: 50%; background: var(--bg3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+    .profile-pfp-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .profile-pfp-controls { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .profile-pfp-name { font-size: 18px; font-weight: 600; }
+    .profile-pfp-sub { font-size: 13px; color: var(--muted); }
+    .upload-btn { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 7px 14px; color: var(--text); font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; width: fit-content; }
+    .upload-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .divider-text { font-size: 11px; color: var(--muted); }
+    .profile-form { display: flex; flex-direction: column; gap: 16px; }
+    .logout-btn { background: none; border: 1px solid #e53935; color: #e53935; border-radius: var(--radius-sm); padding: 9px 18px; cursor: pointer; font-size: 13px; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
+    .logout-btn:hover { background: #e53935; color: #fff; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="/" class="logo"><span class="logo-role">Role</span><span class="logo-mole">Mole</span></a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-moon" id="theme-icon"></i></button>
+    </div>
+  </nav>
+
+  <div class="profile-wrap">
+    <div class="profile-card">
+      <div class="profile-pfp-section">
+        <div class="profile-pfp-circle" id="pfp-circle">
+          <i class="fa-solid fa-user" style="font-size:28px;color:var(--muted)"></i>
+        </div>
+        <div class="profile-pfp-controls">
+          <div class="profile-pfp-name" id="pfp-name">Your Profile</div>
+          <div class="profile-pfp-sub" id="pfp-username"></div>
+          <label class="upload-btn">
+            <i class="fa-solid fa-upload"></i> Upload photo
+            <input type="file" id="pfp-file" accept="image/*" style="display:none" onchange="previewPfp(this)"/>
+          </label>
+          <span class="divider-text">— or paste a URL below —</span>
+        </div>
+      </div>
+
+      <form class="profile-form" onsubmit="saveProfile(event)">
+        <div class="form-group">
+          <label><i class="fa-solid fa-user"></i> Username <span class="muted">(cannot be changed)</span></label>
+          <input type="text" id="username" placeholder="yourname" disabled style="opacity:0.5;cursor:not-allowed"/>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-signature"></i> Display Name</label>
+          <input type="text" id="display_name" placeholder="Your Name"/>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-venus-mars"></i> Gender</label>
+          <select id="gender">
+            <option value="">Prefer not to say</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Non-binary">Non-binary</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-id-badge"></i> Pronouns</label>
+          <select id="pronouns">
+            <option value="">Not specified</option>
+            <option value="he/him">he/him</option>
+            <option value="she/her">she/her</option>
+            <option value="they/them">they/them</option>
+            <option value="any">any pronouns</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-image"></i> Profile Picture URL</label>
+          <input type="url" id="pfp_url" placeholder="https://..." oninput="previewPfpUrl(this.value)"/>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <button type="submit" class="btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+          <button type="button" class="logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+        </div>
+        <div id="profile-msg" class="form-msg"></div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

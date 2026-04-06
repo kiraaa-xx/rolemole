@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<link rel="manifest" href="/site.webmanifest"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login – Role Mole</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .auth-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .auth-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px; width: 100%; max-width: 440px; }
+    .auth-logo { text-align: center; font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .auth-logo span { color: var(--accent); }
+    .auth-sub { text-align: center; color: var(--muted); font-size: 13px; margin-bottom: 28px; }
+    .auth-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+    .auth-tab { flex: 1; text-align: center; padding: 10px; font-size: 14px; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+    .auth-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .auth-form { display: flex; flex-direction: column; gap: 14px; }
+    .pfp-upload-wrap { display: flex; flex-direction: column; gap: 8px; }
+    .pfp-preview-wrap { display: flex; align-items: center; gap: 12px; }
+    .pfp-preview { width: 60px; height: 60px; border-radius: 50%; background: var(--bg3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 22px; overflow: hidden; flex-shrink: 0; }
+    .pfp-preview img { width: 100%; height: 100%; object-fit: cover; }
+    .pfp-upload-options { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+    .pfp-upload-btn { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 7px 14px; color: var(--text); font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s; width: fit-content; }
+    .pfp-upload-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .pfp-or { font-size: 11px; color: var(--muted); text-align: center; }
+    .auth-switch { text-align: center; font-size: 13px; color: var(--muted); margin-top: 8px; }
+    .auth-switch a { color: var(--accent); cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">Role<span>Mole</span></div>
+      <div class="auth-sub">Your story starts here</div>
+
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">Login</div>
+        <div class="auth-tab" id="tab-register" onclick="switchTab('register')">Register</div>
+      </div>
+
+      <!-- Login Form -->
+      <form class="auth-form" id="login-form" onsubmit="doLogin(event)">
+        <div class="form-group">
+          <label><i class="fa-solid fa-user"></i> Username</label>
+          <input type="text" id="login-username" placeholder="your username" required/>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-lock"></i> Password</label>
+          <div style="position:relative;display:flex;align-items:center;">
+  <input type="password" id="login-password" placeholder="your password" required style="width:100%;padding-right:40px"/>
+  <button type="button" onclick="togglePass('login-password', this)" style="position:absolute;right:12px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;">
+    <i class="fa-solid fa-eye"></i>
+  </button>
+</div>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%">
+          <i class="fa-solid fa-right-to-bracket"></i> Login
+        </button>
+        <div id="login-msg" class="form-msg"></div>
+      </form>
+
+      <!-- Register Form -->
+      <form class="auth-form" id="register-form" style="display:none" onsubmit="doRegister(event)">
+        <div class="form-group">
+          <label><i class="fa-solid fa-user"></i> Username <span class="muted">(unique, no spaces)</span></label>
+          <input type="text" id="reg-username" placeholder="cooluser123" required pattern="[a-zA-Z0-9_]+" title="Letters, numbers and underscores only"/>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-signature"></i> Display Name <span class="muted">(shown in chat)</span></label>
+          <input type="text" id="reg-display" placeholder="Your Name" required/>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-lock"></i> Password</label>
+          <div style="position:relative;display:flex;align-items:center;">
+  <input type="password" id="reg-password" placeholder="create a password" required minlength="6" style="width:100%;padding-right:40px"/>
+  <button type="button" onclick="togglePass('reg-password', this)" style="position:absolute;right:12px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;">
+    <i class="fa-solid fa-eye"></i>
+  </button>
+</div>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-venus-mars"></i> Gender</label>
+          <select id="reg-gender">
+            <option value="">Prefer not to say</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Non-binary">Non-binary</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-id-badge"></i> Pronouns</label>
+          <select id="reg-pronouns">
+            <option value="">Not specified</option>
+            <option value="he/him">he/him</option>
+            <option value="she/her">she/her</option>
+            <option value="they/them">they/them</option>
+            <option value="any">any pronouns</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-image"></i> Profile Picture</label>
+          <div class="pfp-upload-wrap">
+            <div class="pfp-preview-wrap">
+              <div class="pfp-preview" id="pfp-preview">
+                <i class="fa-solid fa-user" style="font-size:24px"></i>
+              </div>
+              <div class="pfp-upload-options">
+                <label class="pfp-upload-btn">
+                  <i class="fa-solid fa-upload"></i> Upload from device
+                  <input type="file" id="pfp-file" accept="image/*" style="display:none" onchange="previewPfp(this)"/>
+                </label>
+                <div class="pfp-or">— or paste URL —</div>
+                <input type="url" id="pfp-url" placeholder="https://..." style="font-size:12px;padding:6px 10px" oninput="previewPfpUrl(this.value)"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%">
+          <i class="fa-solid fa-user-plus"></i> Create Account
+        </button>
+        <div id="register-msg" class="form-msg"></div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

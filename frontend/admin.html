@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<link rel="manifest" href="/site.webmanifest"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin – Role Mole</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/admin.css"/>
+</head>
+<body>
+
+  <!-- Login Screen -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-card">
+      <div class="logo" style="margin-bottom:1.5rem">
+        <span class="logo-role">Role</span><span class="logo-mole">Mole</span>
+        <span class="muted" style="font-size:14px"> Admin</span>
+      </div>
+      <form onsubmit="adminLogin(event)">
+        <div class="form-group">
+          <label><i class="fa-solid fa-lock"></i> Admin Password</label>
+          <input type="password" id="admin-password" placeholder="Enter password" required autocomplete="new-password"/>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%">
+          <i class="fa-solid fa-right-to-bracket"></i> Login
+        </button>
+        <div id="login-error" class="form-msg error" style="display:none">Wrong password</div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Panel -->
+  <div id="admin-panel" style="display:none">
+    <nav class="navbar">
+      <div class="nav-left">
+        <a href="/" class="logo">
+          <span class="logo-role">Role</span><span class="logo-mole">Mole</span>
+          <span class="muted" style="font-size:13px"> Admin</span>
+        </a>
+      </div>
+      <div class="nav-right">
+        <button class="theme-toggle" onclick="toggleTheme()">
+          <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+        <button class="btn-outline" onclick="adminLogout()">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </button>
+      </div>
+    </nav>
+
+    <div class="admin-wrap">
+      <div class="admin-sidebar">
+        <div class="sidebar-label">Dashboard</div>
+        <button class="sidebar-btn active" onclick="showSection('characters')">
+          <i class="fa-solid fa-masks-theater"></i> Characters
+        </button>
+        <button class="sidebar-btn" onclick="showSection('create')">
+          <i class="fa-solid fa-plus"></i> Create Character
+        </button>
+        <div class="sidebar-label" style="margin-top:1rem">Stats</div>
+        <div class="stat-card">
+          <div class="stat-num" id="total-chars">0</div>
+          <div class="stat-label">Total Characters</div>
+        </div>
+      </div>
+
+      <div class="admin-content">
+
+        <!-- ── Characters List ── -->
+        <div id="section-characters" class="admin-section">
+          <div class="section-header">
+            <h2><i class="fa-solid fa-masks-theater"></i> All Characters</h2>
+            <button class="btn-primary" onclick="showSection('create')">
+              <i class="fa-solid fa-plus"></i> New Character
+            </button>
+          </div>
+          <div id="admin-chars-list"></div>
+        </div>
+
+        <!-- ── Create / Edit Character ── -->
+        <div id="section-create" class="admin-section" style="display:none">
+          <div class="section-header">
+            <h2 id="form-title"><i class="fa-solid fa-plus"></i> Create Character</h2>
+          </div>
+          <form class="char-form" onsubmit="saveCharacter(event)">
+            <input type="hidden" id="edit-id"/>
+            <div class="form-grid">
+
+              <div class="form-group">
+                <label>Character Name *</label>
+                <input type="text" id="f-name" required placeholder="e.g. Elena Dawnblade"/>
+              </div>
+
+              <div class="form-group">
+                <label>Genre *</label>
+                <select id="f-genre" required>
+                  <option value="">Select genre</option>
+                  <option>Fantasy</option>
+                  <option>Sci-Fi</option>
+                  <option>Mystery</option>
+                  <option>Romance</option>
+                  <option>Horror</option>
+                  <option>Adventure</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Gender</label>
+                <select id="f-gender">
+                  <option value="">Not specified</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                  <option>Non-binary</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Pronouns</label>
+                <select id="f-pronouns">
+                  <option value="">Not specified</option>
+                  <option>he/him</option>
+                  <option>she/her</option>
+                  <option>they/them</option>
+                  <option>any</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label><i class="fa-solid fa-volume-high"></i> Character Voice</label>
+                <select id="f-voice">
+                  <optgroup label="Female Voices">
+  <option value="en-US-JennyNeural">Jenny — Warm & Natural (Female)</option>
+  <option value="en-US-AriaNeural">Aria — Friendly & Bright (Female)</option>
+  <option value="en-US-SaraNeural">Sara — Clear & Professional (Female)</option>
+  <option value="en-GB-SoniaNeural">Sonia — British Female</option>
+  <option value="en-US-MichelleNeural">Michelle — Young & Energetic (Female)</option>
+</optgroup>
+<optgroup label="Male Voices">
+  <option value="en-US-GuyNeural">Guy — Deep & Strong (Male)</option>
+  <option value="en-US-ChristopherNeural">Christopher — Warm & Friendly (Male)</option>
+  <option value="en-GB-RyanNeural">Ryan — British Male</option>
+  <option value="en-US-EricNeural">Eric — Casual & Natural (Male)</option>
+</optgroup>
+                </select>
+              </div>
+
+              <div class="form-group full-width">
+                <label>Profile Picture</label>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div id="admin-pfp-preview" style="width:50px;height:50px;border-radius:50%;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0">
+                    <i class="fa-solid fa-image" style="color:var(--muted)"></i>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:6px;flex:1">
+                    <label style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px 12px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px;width:fit-content">
+                      <i class="fa-solid fa-upload"></i> Upload image
+                      <input type="file" id="f-pfp-file" accept="image/*" style="display:none" onchange="previewAdminPfp(this)"/>
+                    </label>
+                    <span style="font-size:11px;color:var(--muted)">— or paste URL —</span>
+                    <input type="url" id="f-pfp" placeholder="https://..." oninput="previewAdminPfpUrl(this.value)" style="font-size:12px;padding:6px 10px"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group full-width">
+                <label>Short Description <span class="muted">(shown on character card)</span></label>
+                <input type="text" id="f-desc" placeholder="A brief tagline for the character..." required/>
+              </div>
+
+              <div class="form-group full-width">
+                <label>Personality <span class="muted">(the AI will use this as its core identity)</span></label>
+                <textarea id="f-personality" rows="5" placeholder="Describe the character's personality, traits, how they talk, what they like/dislike..." required></textarea>
+              </div>
+
+              <div class="form-group full-width">
+                <label>Backstory / About <span class="muted">(shown on the About page)</span></label>
+                <textarea id="f-backstory" rows="4" placeholder="The character's history, background, world they come from..."></textarea>
+              </div>
+
+              <div class="form-group full-width">
+                <label>Intro / Scenario Message <span class="muted">(use {user} where the user's name should appear)</span></label>
+                <textarea id="f-intro" rows="4" placeholder='*Elena turns to face {user}, her silver eyes narrowing.* "So you have finally arrived..."'></textarea>
+              </div>
+
+              <div class="form-group full-width">
+                <label>Writing Style Notes <span class="muted">(optional extra instructions for the AI)</span></label>
+                <textarea id="f-style" rows="3" placeholder="e.g. Speak in old English, be cryptic, use lots of metaphors..."></textarea>
+              </div>
+
+            </div>
+
+            <div class="prompt-preview" id="prompt-preview" style="display:none">
+              <div class="preview-label"><i class="fa-solid fa-eye"></i> System Prompt Preview</div>
+              <pre id="prompt-preview-text"></pre>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn-outline" onclick="previewPrompt()">
+                <i class="fa-solid fa-eye"></i> Preview Prompt
+              </button>
+              <button type="submit" class="btn-primary">
+                <i class="fa-solid fa-floppy-disk"></i> Save Character
+              </button>
+              <button type="button" class="btn-ghost" onclick="showSection('characters')">Cancel</button>
+            </div>
+            <div id="form-msg" class="form-msg"></div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

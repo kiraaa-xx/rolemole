@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<link rel="manifest" href="/site.webmanifest"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About – Role Mole</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .about-page { max-width: 700px; margin: 0 auto; padding: 32px 24px 60px; }
+    .about-banner { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; display: flex; gap: 24px; align-items: center; margin-bottom: 24px; }
+    .about-banner-pfp img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; }
+    .about-banner-pfp .avatar-circle { width: 100px; height: 100px; font-size: 36px; }
+    .about-banner-info h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .about-banner-info .badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .about-banner-info .desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .about-cards { display: flex; flex-direction: column; gap: 16px; }
+    .about-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; }
+    .about-card-title { font-size: 13px; font-weight: 600; color: var(--blue); display: flex; align-items: center; gap: 8px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .about-card-body { font-size: 14px; color: var(--muted); line-height: 1.8; white-space: pre-wrap; }
+    .about-actions { display: flex; gap: 12px; margin-top: 24px; }
+    .pronoun-badge { background: var(--bg3); border: 1px solid var(--border); color: var(--muted); font-size: 12px; padding: 4px 12px; border-radius: 20px; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left">
+      <button class="back-btn" onclick="history.back()"><i class="fa-solid fa-arrow-left"></i></button>
+      <a href="/" class="logo"><span class="logo-role">Role</span><span class="logo-mole">Mole</span></a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-moon" id="theme-icon"></i></button>
+    </div>
+  </nav>
+
+  <div class="about-page">
+    <div class="about-banner">
+      <div class="about-banner-pfp">
+        <img id="about-pfp" src="" alt="" style="display:none"/>
+        <div id="about-pfp-fallback" class="avatar-circle"></div>
+      </div>
+      <div class="about-banner-info">
+        <h1 id="about-name">Loading...</h1>
+        <div class="badges" id="about-badges"></div>
+        <div class="desc" id="about-desc"></div>
+      </div>
+    </div>
+
+    <div class="about-cards">
+      <div class="about-card" id="card-backstory">
+        <div class="about-card-title"><i class="fa-solid fa-book-open"></i> Backstory</div>
+        <div class="about-card-body" id="about-backstory">No backstory provided.</div>
+      </div>
+      <div class="about-card" id="card-personality">
+        <div class="about-card-title"><i class="fa-solid fa-brain"></i> Personality</div>
+        <div class="about-card-body" id="about-personality">No personality info.</div>
+      </div>
+      <div class="about-card" id="card-style" style="display:none">
+        <div class="about-card-title"><i class="fa-solid fa-pen-nib"></i> Writing Style</div>
+        <div class="about-card-body" id="about-style"></div>
+      </div>
+    </div>
+
+    <div class="about-actions">
+      <a id="about-chat-btn" href="#" class="btn-primary btn-lg">
+        <i class="fa-solid fa-comments"></i> Start Chat
+      </a>
+      <button onclick="history.back()" class="btn-outline btn-lg">
+        <i class="fa-solid fa-arrow-left"></i> Go Back
+      </button>
+    </div>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script src="js/about.js"></script>
+</body>
+</html>

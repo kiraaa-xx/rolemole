@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chat – Role Mole</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+
+<link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<link rel="manifest" href="/site.webmanifest"/>
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/chat.css"/>
+</head>
+<body class="chat-body">
+  <div class="chat-wrap">
+    <div class="chat-header">
+      <a href="/" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+      <div class="chat-header-pfp">
+  <img id="char-pfp" src="" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;display:none"/>
+  <div id="char-pfp-fallback" class="avatar-circle" style="width:40px;height:40px;font-size:15px;display:flex"></div>
+</div>
+      <div class="chat-header-info">
+        <div class="chat-char-name" id="char-name">Loading...</div>
+        <div class="chat-char-sub" id="char-sub"></div>
+      </div>
+      <div class="chat-header-actions">
+        <button onclick="goAbout()" title="About character"><i class="fa-solid fa-circle-info"></i></button>
+        <button onclick="refreshCharacter()" title="Refresh character memory"><i class="fa-solid fa-rotate-right"></i></button>
+        <button onclick="toggleTheme()" title="Toggle theme"><i class="fa-solid fa-moon" id="theme-icon"></i></button>
+      </div>
+    </div>
+
+    <div class="chat-messages" id="chat-messages"></div>
+
+<div class="chat-controls-bar" id="chat-controls" style="display:none">
+  <div class="control-group">
+    <i class="fa-solid fa-text-height"></i>
+    <span>Length</span>
+    <div class="segmented">
+      <button class="seg-btn active" onclick="setLength('short', this)">Short</button>
+      <button class="seg-btn" onclick="setLength('medium', this)">Medium</button>
+      <button class="seg-btn" onclick="setLength('long', this)">Long</button>
+    </div>
+  </div>
+  <div class="control-group">
+    <i class="fa-solid fa-masks-theater"></i>
+    <span>Mood</span>
+    <div class="segmented">
+      <button class="seg-btn active" onclick="setMood('normal', this)">Normal</button>
+      <button class="seg-btn" onclick="setMood('serious', this)">Serious</button>
+      <button class="seg-btn" onclick="setMood('funny', this)">Funny</button>
+      <button class="seg-btn" onclick="setMood('dramatic', this)">Dramatic</button>
+      <button class="seg-btn" onclick="setMood('romantic', this)">Romantic</button>
+    </div>
+  </div>
+</div>
+
+<div class="chat-input-bar">
+  <button class="settings-toggle-btn" onclick="toggleControls()" id="controls-toggle-btn" title="Response settings">
+    <i class="fa-solid fa-sliders"></i>
+  </button>
+  <textarea id="chat-input" rows="1" placeholder='** for actions · "quotes" for speech' onkeydown="handleKey(event)"></textarea>
+  <button class="send-btn" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+</div>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>
