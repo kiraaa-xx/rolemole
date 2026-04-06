@@ -1,5 +1,5 @@
 require('dotenv').config();
-const HF_TOKEN = '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';
+const HF_TOKEN = process.env.HF_TOKEN || '';
 const TTS_MONTHLY_LIMIT = 50000;
 const express = require('express');
 const cors = require('cors');
@@ -15,10 +15,10 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 const supabase = createClient(
-  'https://gpmlzxfozpitsghffwbw.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdwbWx6eGZvenBpdHNnaGZmd2J3Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTA1NjQzOCwiZXhwIjoyMDkwNjMyNDM4fQ.yNlFgTGhpH-dgtm1M9D50jHTJ1GXLpfmY7ngS5wKMBQ'
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_KEY
 );
-const groq = new Groq({ apiKey: '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' });
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'rolemole_admin_2024';
 const JWT_SECRET = 'rolemole_secret_key_2024';
 
