@@ -338,18 +338,26 @@
 @media (max-width: 600px) {
   .chat-input-bar {
     position: fixed;
-    bottom: 0;
+    bottom: env(safe-area-inset-bottom, 0);
     left: 0;
     right: 0;
     max-width: none;
     margin: 0;
     border-radius: 0;
     z-index: 100;
+    padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 12px));
+    box-shadow: 0 -12px 35px rgba(0, 0, 0, 0.22);
+  }
+  .chat-input-bar textarea {
+    min-height: 52px;
   }
   .chat-messages {
-    padding-bottom: 80px; /* Space for fixed input bar */
+    padding-bottom: calc(104px + env(safe-area-inset-bottom, 0)); /* Space for fixed input bar */
   }
   .chat-controls-bar {
     padding-bottom: 70px; /* Additional space when controls are shown */
+  }
+  .chat-wrap {
+    padding-bottom: env(safe-area-inset-bottom, 0);
   }
 }
