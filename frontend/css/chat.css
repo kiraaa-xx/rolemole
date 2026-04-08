@@ -334,6 +334,23 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* I DIDN'T TOUCH ANYTHING....*/
+@media (max-width: 768px) {
+  .chat-wrap {
+    height: 100dvh;
+    height: -webkit-fill-available;
+  }
+
+  .chat-messages {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .chat-input-bar {
+    padding: 10px 12px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+  }
+}
+
 /* Mobile responsive fixes */
 @media (max-width: 600px) {
   .chat-input-bar {
